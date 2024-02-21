@@ -37,7 +37,7 @@ yarn-error.log
 testem.log
 /typings
 /src/assets/gifs
-/src/assets/
+/src/assets/SCREENLOADING.gif
 
 # System files
 .DS_Store
