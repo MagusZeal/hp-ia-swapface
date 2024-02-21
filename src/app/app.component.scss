@@ -1,0 +1,16 @@
+ul {
+  text-align: center;
+}
+
+.layered-image {
+  position: relative;
+}
+
+.layered-image img {
+  height: 738px;
+  width: 1080px;
+}
+.image-overlay {
+  position: absolute;
+  z-index: 10;
+}
