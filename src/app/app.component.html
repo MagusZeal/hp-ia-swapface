@@ -1,5 +1,5 @@
 <div [hidden]="!(state === -2)" (click)="start()">
-  <img src="assets/SCREEN_1_ERROR.png"  class="image-overlay"/>
+  <img src="assets/SCREEN_INICIO.png"  class="image-overlay"/>
   <button mat-raised-button style="position: absolute;height: 274px;width: 745px;top: 1442px;left: 170px;z-index: 1000;opacity: 0;" ></button>
 </div>
 
@@ -58,7 +58,7 @@
   <button mat-raised-button (click)="completePhone()" style="position: absolute;height: 274px;width: 745px;top: 1442px;left: 165px;z-index: 1000;opacity: 0;" ></button>
 </div>
 
-<div [hidden]="!(state == 3)">
+<div [hidden]="!(state == 2)">
   <img src="assets/SCREEN4.png"  class="image-overlay"/>
   <img src="assets/gifs/VIDEO1.gif" style="position: absolute;height: 363px;width: 363px;top: 440px;left: 114px;" />
   <img src="assets/gifs/VIDEO2.gif" style="position: absolute;height: 363px;width: 363px;top: 444px;left: 601px;" />
@@ -67,12 +67,23 @@
   <img src="assets/gifs/VIDEO5.gif" style="position: absolute;height: 363px;width: 363px;top: 1339px;left: 114px;" />
   <img src="assets/gifs/VIDEO6.gif" style="position: absolute;height: 363px;width: 363px;top: 1339px;left: 601px;" />
 
-  <button *ngIf="!loading && state === 3" (click)="callSwapface('VIDEO1.mp4')" style="position: absolute;height: 363px;width: 363px;top: 440px;left: 114px;opacity: 0;z-index: 1000;" ></button>
-  <button *ngIf="!loading && state === 3" (click)="callSwapface('VIDEO2.mp4')" style="position: absolute;height: 363px;width: 363px;top: 444px;left: 601px;opacity: 0;z-index: 1000;" ></button>
-  <button *ngIf="!loading && state === 3" (click)="callSwapface('VIDEO3.mp4')" style="position: absolute;height: 363px;width: 363px;top: 889px;left: 114px;opacity: 0;z-index: 1000;" ></button>
-  <button *ngIf="!loading && state === 3" (click)="callSwapface('VIDEO4.mp4')" style="position: absolute;height: 363px;width: 363px;top: 889px;left: 601px;opacity: 0;z-index: 1000;" ></button>
-  <button *ngIf="!loading && state === 3" (click)="callSwapface('VIDEO5.mp4')" style="position: absolute;height: 363px;width: 363px;top: 1339px;left: 114px;opacity: 0;z-index: 1000;" ></button>
-  <button *ngIf="!loading && state === 3" (click)="callSwapface('VIDEO6.mp4')" style="position: absolute;height: 363px;width: 363px;top: 1339px;left: 601px;opacity: 0;z-index: 1000;" ></button>
+  <button *ngIf="!loading && state === 2" (click)="callSwapface('VIDEO1.mp4')" style="position: absolute;height: 363px;width: 363px;top: 440px;left: 114px;opacity: 0;z-index: 1000;" ></button>
+  <button *ngIf="!loading && state === 2" (click)="callSwapface('VIDEO2.mp4')" style="position: absolute;height: 363px;width: 363px;top: 444px;left: 601px;opacity: 0;z-index: 1000;" ></button>
+  <button *ngIf="!loading && state === 2" (click)="callSwapface('VIDEO3.mp4')" style="position: absolute;height: 363px;width: 363px;top: 889px;left: 114px;opacity: 0;z-index: 1000;" ></button>
+  <button *ngIf="!loading && state === 2" (click)="callSwapface('VIDEO4.mp4')" style="position: absolute;height: 363px;width: 363px;top: 889px;left: 601px;opacity: 0;z-index: 1000;" ></button>
+  <button *ngIf="!loading && state === 2" (click)="callSwapface('VIDEO5.mp4')" style="position: absolute;height: 363px;width: 363px;top: 1339px;left: 114px;opacity: 0;z-index: 1000;" ></button>
+  <button *ngIf="!loading && state === 2" (click)="callSwapface('VIDEO6.mp4')" style="position: absolute;height: 363px;width: 363px;top: 1339px;left: 601px;opacity: 0;z-index: 1000;" ></button>
+</div>
+
+<div [hidden]="!(state === 3 && !ruletaClicked)">
+  <img src="assets/ruleta/RULETA.png" (click)="randomRuleta()" class="image-overlay"/>
+</div>
+
+<div [hidden]="!(state === 3 && ruletaClicked)">
+  <img src="assets/ruleta/RULETA.png" class="image-overlay" style=" z-index: -1"/>
+  <video *ngIf="ruleta && ruletaClicked" style="height: 1920px;width: 1080px;" autoplay>
+    <source [src]="ruleta" type="video/mp4">
+  </video>
 </div>
 
 <div [hidden]="!(state === 4)">
@@ -82,7 +93,7 @@
 <div [hidden]="!(state === 5)">
   <img src="assets/SCREEN_RESULTADO.png"  class="image-overlay"/>
 
-  <video *ngIf="video" style="position: absolute;height: 865px;width: 864px;top: 282px;left: 108px;z-index: -100;object-fit: fill;" autoplay #videoPlayer (click)="toggleVideo()" loop>
+  <video *ngIf="video && state === 5" style="position: absolute;height: 865px;width: 864px;top: 282px;left: 108px;z-index: -100;object-fit: fill;" autoplay #videoPlayer (click)="toggleVideo()" loop>
     <source [src]="video" type="video/mp4">
   </video>
 

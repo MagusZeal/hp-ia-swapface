@@ -82,6 +82,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   public loading = false;
   public number = '';
   public numberAlert = false;
+  public ruleta: any = null;
+  public ruletaReady = false;
+  public ruletaClicked = false;
+  public timeoutId:any = null;
   public subscription: Subscription;
   userActivity:any;
   userInactive: Subject<any> = new Subject();
@@ -168,16 +172,32 @@ toggleVideo(){
 
   completePhone(){
     if(this.number.length === 8) {
-      this.state = 3;
+      this.state = 2;
     } else {
       this.numberAlert = true;
     }
   }
 
-  callSwapface(target:any){
-    this.state = 4;
-    this.loading = true;
+  randomRuleta(){
+    this.ruletaClicked = true;
+    this.timeoutId = setTimeout(() => {
+      if(this.state !== 9){
+        this.ruletaReady = true
+        if (this.video) {
+          this.state = 5;
+          return;
+        }
+        this.state = 4;
+      }
+    }, 28000);
+  }
 
+  callSwapface(target:any){
+    this.ruleta = 'assets/ruleta/PREMIO' + (Math.floor(Math.random() * 3) + 1) + '.mp4';
+    console.error(this.ruleta);
+    this.state = 3;
+    this.loading = true;
+    this.ruletaReady = false;
     let hasPhone = false;
     let valueSend = this.number.length < 8? uuid(): this.number;
     if (this.number.length < 8) {
@@ -195,16 +215,18 @@ toggleVideo(){
 
     this.subscription = this.swapfaceService._post(obj).subscribe((response)=>{
       if(response !== -1) {
-        this.state = 5;
         this.video = response;
         this.loading = false;
+        if(this.state !== 3) {
+          this.state = 5;
+        }
     } else {
-        this.state = 9;
         this.loading = false;
+        this.state = 9;
     }
     }, err =>{
-      this.state = 9;
       this.loading = false;
+      this.state = 9;
     });
   }
 
@@ -229,6 +251,10 @@ toggleVideo(){
     this.number ='';
     this.video = null;
     this.numberAlert = false;
+    this.ruletaReady = false;
+    this.ruleta = null;
+    this.ruletaClicked = false;
+    clearTimeout(this.timeoutId);
     if(this.subscription) {
       this.subscription.unsubscribe();
     }
